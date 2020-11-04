@@ -97,7 +97,7 @@ function createHostState (): HostState {
     hostError: undefined,
     nextReconcileDate: new Date(Date.now() + 15 * 14 * 60 * 60 * 1000),
     onlyAnonWallet: false,
-    showOnboarding: false,
+    showOnboarding: true,
     tipProcessed: false,
     currentMonthlyTip: 0
   }

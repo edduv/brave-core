@@ -20,6 +20,8 @@ import ContributeBox from './contributeBox'
 import TipBox from './tipsBox'
 import MonthlyContributionBox from './monthlyContributionBox'
 import QRBox from './qrBox'
+import { SettingsOptInForm, RewardsTourModal } from '../../shared/components/onboarding'
+import { OptInCard } from './style'
 
 // Utils
 import * as rewardsActions from '../actions/rewards_actions'
@@ -32,6 +34,7 @@ interface Props extends Rewards.ComponentProps {
 
 interface State {
   redirectModalDisplayed: 'hide' | 'show'
+  showRewardsTour: boolean
 }
 
 class SettingsPage extends React.Component<Props, State> {
@@ -40,7 +43,8 @@ class SettingsPage extends React.Component<Props, State> {
   constructor (props: Props) {
     super(props)
     this.state = {
-      redirectModalDisplayed: 'hide'
+      redirectModalDisplayed: 'hide',
+      showRewardsTour: false
     }
   }
 
@@ -284,22 +288,70 @@ class SettingsPage extends React.Component<Props, State> {
     )
   }
 
+  getRewardsTour () {
+    if (!this.state.showRewardsTour) {
+      return null
+    }
+
+    const { showOnboarding } = this.props.rewardsData
+
+    const onDone = () => {
+      this.setState({ showRewardsTour: false })
+    }
+
+    return (
+      <RewardsTourModal
+        layout='wide'
+        rewardsEnabled={!showOnboarding}
+        onClose={onDone}
+        onDone={onDone}
+      />
+    )
+  }
+
+  renderSettings () {
+    const { showOnboarding } = this.props.rewardsData
+
+    if (showOnboarding) {
+      const onTakeTour = () => {
+        this.setState({ showRewardsTour: true })
+      }
+
+      const onEnable = () => {
+        this.actions.saveOnboardingResult('opted-in')
+        onTakeTour()
+      }
+
+      return (
+        <OptInCard>
+          <SettingsOptInForm onTakeTour={onTakeTour} onEnable={onEnable} />
+        </OptInCard>
+      )
+    }
+
+    return (
+      <>
+        <MainToggle
+          testId={'mainToggle'}
+          onTOSClick={this.openTOS}
+          onPrivacyClick={this.openPrivacyPolicy}
+        />
+        <QRBox />
+        <AdsBox />
+        <ContributeBox />
+        <MonthlyContributionBox />
+        <TipBox />
+      </>
+    )
+  }
+
   render () {
     return (
       <Page>
         <Grid columns={3} customStyle={{ gridGap: '32px' }}>
           <Column size={2} customStyle={{ justifyContent: 'center', flexWrap: 'wrap' }}>
             {this.getRedirectModal()}
-            <MainToggle
-              testId={'mainToggle'}
-              onTOSClick={this.openTOS}
-              onPrivacyClick={this.openPrivacyPolicy}
-            />
-            <QRBox />
-            <AdsBox />
-            <ContributeBox />
-            <MonthlyContributionBox />
-            <TipBox />
+            {this.renderSettings()}
           </Column>
           <Column size={1} customStyle={{ justifyContent: 'center', flexWrap: 'wrap' }}>
             {this.getPromotionsClaims()}
@@ -307,6 +359,7 @@ class SettingsPage extends React.Component<Props, State> {
             {this.renderPromos()}
           </Column>
         </Grid>
+        {this.getRewardsTour()}
       </Page>
     )
   }

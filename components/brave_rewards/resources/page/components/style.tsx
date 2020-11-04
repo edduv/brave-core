@@ -28,3 +28,7 @@ export const QRText = styled<{}, 'div'>('div')`
   padding: 0 10px 0 0;
   line-height: 1.5;
 `
+
+export const OptInCard = styled(CustomCard)`
+  box-shadow: 0 0;
+`
