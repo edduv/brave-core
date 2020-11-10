@@ -70,6 +70,7 @@ const char kNewTabPageShowTogether[] = "brave.new_tab_page.show_together";
 const char kNewTabPageShowAddCard[] = "brave.new_tab_page.show_addcard";
 const char kNewTabPageShowsOptions[] = "brave.new_tab_page.shows_options";
 const char kBraveTodaySources[] = "brave.today.sources";
+const char kBraveTodayIntroDismissed[] = "brave.today.intro_dismissed";
 const char kBraveEnabledMediaRouter[] = "brave.enable_media_router";
 const char kBinanceAccessToken[] = "brave.binance.access_token";
 const char kBinanceRefreshToken[] = "brave.binance.refresh_token";

@@ -101,6 +101,7 @@ declare namespace NewTab {
     showTopSites: boolean
     showRewards: boolean
     showAddCard: boolean
+    isBraveTodayIntroDismissed: boolean
     isBrandedWallpaperNotificationDismissed: boolean
   }
 

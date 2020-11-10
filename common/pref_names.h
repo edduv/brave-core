@@ -62,6 +62,7 @@ extern const char kNewTabPageShowTogether[];
 extern const char kNewTabPageShowAddCard[];
 extern const char kNewTabPageShowsOptions[];
 extern const char kBraveTodaySources[];
+extern const char kBraveTodayIntroDismissed[];
 extern const char kBraveEnabledMediaRouter[];
 extern const char kAlwaysShowBookmarkBarOnNTP[];
 extern const char kAutocompleteEnabled[];
