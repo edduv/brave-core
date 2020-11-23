@@ -16,6 +16,7 @@ class RefillUnblindedTokensDelegate {
 
   virtual void OnDidRefillUnblindedTokens() = 0;
   virtual void OnFailedToRefillUnblindedTokens() = 0;
+  virtual void OnWillRetryRefillingUnblindedTokens() = 0;
   virtual void OnDidRetryRefillingUnblindedTokens() = 0;
 };
 

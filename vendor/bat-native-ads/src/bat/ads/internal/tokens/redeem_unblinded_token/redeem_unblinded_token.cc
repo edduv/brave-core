@@ -44,18 +44,6 @@ void RedeemUnblindedToken::set_delegate(
 }
 
 void RedeemUnblindedToken::Redeem(
-    const std::string& creative_instance_id,
-    const ConfirmationType& confirmation_type,
-    const privacy::UnblindedTokenInfo& unblinded_token) {
-  BLOG(1, "Redeem unblinded token");
-
-  const ConfirmationInfo confirmation = CreateConfirmationInfo(
-      creative_instance_id, confirmation_type, unblinded_token);
-
-  CreateConfirmation(confirmation);
-}
-
-void RedeemUnblindedToken::Redeem(
     const ConfirmationInfo& confirmation) {
   BLOG(1, "Redeem unblinded token");
 
