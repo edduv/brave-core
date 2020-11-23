@@ -206,4 +206,8 @@ program
   .action(util.lint)
 
 program
+  .command('format')
+  .action(util.format)
+
+program
   .parse(process.argv)
