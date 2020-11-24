@@ -48,12 +48,17 @@ void RedeemUnblindedPaymentTokens::set_delegate(
 
 void RedeemUnblindedPaymentTokens::MaybeRedeemAfterDelay(
     const WalletInfo& wallet) {
-  if (is_processing_ || retry_timer_.IsRunning()) {
+  if (is_processing_ || timer_.IsRunning() || retry_timer_.IsRunning()) {
     return;
   }
 
   if (!wallet.IsValid()) {
     BLOG(0, "Failed to redeem unblinded payment tokens due to invalid wallet");
+
+    if (delegate_) {
+      delegate_->OnFailedToRedeemUnblindedPaymentTokens();
+    }
+
     return;
   }
 
@@ -77,6 +82,11 @@ void RedeemUnblindedPaymentTokens::Redeem() {
 
   if (ConfirmationsState::Get()->get_unblinded_payment_tokens()->IsEmpty()) {
     BLOG(1, "No unblinded payment tokens to redeem");
+
+    if (delegate_) {
+      delegate_->OnDidRedeemUnblindedPaymentTokens();
+    }
+
     ScheduleNextTokenRedemption();
     return;
   }
@@ -106,8 +116,6 @@ void RedeemUnblindedPaymentTokens::OnRedeem(
   BLOG(6, UrlResponseToString(url_response));
   BLOG(7, UrlResponseHeadersToString(url_response));
 
-  is_processing_ = false;
-
   if (url_response.status_code != net::HTTP_OK) {
     BLOG(1, "Failed to redeem unblinded payment tokens");
     OnRedeemUnblindedPaymentTokens(FAILED);
@@ -119,6 +127,8 @@ void RedeemUnblindedPaymentTokens::OnRedeem(
 
 void RedeemUnblindedPaymentTokens::OnRedeemUnblindedPaymentTokens(
     const Result result) {
+  is_processing_ = false;
+
   if (result != SUCCESS) {
     if (delegate_) {
       delegate_->OnFailedToRedeemUnblindedPaymentTokens();
