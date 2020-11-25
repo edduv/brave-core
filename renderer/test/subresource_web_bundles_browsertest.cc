@@ -100,14 +100,11 @@ std::string CreateWebBundle() {
 std::string GetHeadersForURL(const std::string& url) {
   if (base::EndsWith(url, kOriginTrialPage, base::CompareCase::SENSITIVE)) {
     return kOriginTrialPageHeaders;
-  }
-  else if (base::EndsWith(url, kWebBundle, base::CompareCase::SENSITIVE)) {
+  } else if (base::EndsWith(url, kWebBundle, base::CompareCase::SENSITIVE)) {
     return kWebBundleHeaders;
-  }
-  else if (base::EndsWith(url, kPassJs, base::CompareCase::SENSITIVE)) {
+  } else if (base::EndsWith(url, kPassJs, base::CompareCase::SENSITIVE)) {
     return kPassJsHeaders;
-  }
-  else {
+  } else {
     return std::string();
   }
 }
@@ -120,11 +117,9 @@ std::string GetContentForURL(const std::string& url) {
                     kOriginTrialToken, R"(">)" });
     base::ReplaceFirstSubstringAfterOffset(&response, 0, "META_TAG", meta_tag);
     return response;
-  }
-  else if (base::EndsWith(url, kWebBundle, base::CompareCase::SENSITIVE)) {
+  } else if (base::EndsWith(url, kWebBundle, base::CompareCase::SENSITIVE)) {
     return CreateWebBundle();
-  }
-  else {
+  } else {
     return std::string();
   }
 }
