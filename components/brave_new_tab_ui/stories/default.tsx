@@ -89,7 +89,6 @@ storiesOf('New Tab/Containers', module)
         saveShowBinance={doNothing}
         saveShowTogether={doNothing}
         saveShowGemini={doNothing}
-        saveShowBitcoinDotCom={doNothing}
         saveShowCryptoDotCom={doNothing}
         saveBrandedWallpaperOptIn={doNothing}
       />
